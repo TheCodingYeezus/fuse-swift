@@ -23,7 +23,7 @@ public struct FuseProperty {
 }
 
 public protocol Fuseable {
-    var properties: [FuseProperty] { get }
+    var fuseProperties: [FuseProperty] { get }
 }
 
 public class Fuse {
@@ -390,7 +390,7 @@ extension Fuse {
     
     /// Searches for a text pattern in an array of `Fuseable` objects.
     ///
-    /// Each `FuseSearchable` object contains a `properties` accessor which returns `FuseProperty` array. Each `FuseProperty` is a tuple containing a `key` (the value of the property which should be included in the search), and a `weight` (how much "weight" to assign to the score)
+    /// Each `FuseSearchable` object contains a `fuseProperties` accessor which returns `FuseProperty` array. Each `FuseProperty` is a tuple containing a `key` (the value of the property which should be included in the search), and a `weight` (how much "weight" to assign to the score)
     ///
     /// ## Example
     ///
@@ -400,7 +400,7 @@ extension Fuse {
     ///         let title: String
     ///         let author: String
     ///
-    ///         var properties: [FuseProperty] {
+    ///         var fuseProperties: [FuseProperty] {
     ///             return [
     ///                 FuseProperty(name: title, weight: 0.3),
     ///                 FuseProperty(name: author, weight: 0.7),
@@ -433,7 +433,7 @@ extension Fuse {
             
             var propertyResults = [(key: String, score: Double, ranges: [CountableClosedRange<Int>])]()
 
-            item.properties.forEach { property in
+            item.fuseProperties.forEach { property in
                 let value = property.name
                 
                 if let result = self.search(pattern, in: value) {
@@ -524,7 +524,7 @@ extension Fuse {
                     
                     var propertyResults = [(key: String, score: Double, ranges: [CountableClosedRange<Int>])]()
 
-                    item.properties.forEach { property in
+                    item.fuseProperties.forEach { property in
 
                         let value = property.name
                         
